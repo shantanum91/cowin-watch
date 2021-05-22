@@ -22,3 +22,8 @@ All features of cowin-watch.js, additionaly it can send the alert on Telegram. Y
 How to create Telegram Bot?: https://core.telegram.org/bots
 
 How to create Telegram public Channel?: https://telegram.org/tour/channels
+
+
+## How I did setup for me?
+
+![Image](cowinwatch.png?raw=true "Setup")
