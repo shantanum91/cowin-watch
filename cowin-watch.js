@@ -1,8 +1,9 @@
 const https = require('https');
 
-const DATE = '12-05-2021';
+const now = new Date();
+const DATE = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
 const AGE_LIMIT = 45;
-const DIST_ID = 367;
+const DIST_ID = 379;
 const PIN_FILTER = null;//[411014];
 const EXCLUDE_PINS = [];
 
