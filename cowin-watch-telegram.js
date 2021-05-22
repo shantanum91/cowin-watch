@@ -1,13 +1,20 @@
 const https = require('https');
+const fs = require('fs')
 
-const now = new Date();
-const DATE = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
+/* Configure your district, pins, exclude pins & age limit */
 const AGE_LIMIT = 45;
 const DIST_ID = 379;
 const PIN_FILTER = null;//[411014];
 const EXCLUDE_PINS = [];
+const now = new Date();
+const DATE = now.getDate() + '-' + (now.getMonth() + 1) + '-' + now.getFullYear();
 
 const url = `https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict?district_id=${DIST_ID}&date=${DATE}`;
+
+/* Add Bot token in token.txt & put your channelname in TELEGRAM_CHANNEL variable */
+const BOT_TOKEN = fs.readFileSync('token.txt', 'utf8');
+const TELEGRAM_CHANNEL = '@cowinwatch';
+
 
 console.log(`Scanning for week: ${DATE} | Age Limit: ${AGE_LIMIT} | ` + `Dist: ${DIST_ID}` + ` | PinFilter: ${PIN_FILTER}` + ` | ExcludePins: ${EXCLUDE_PINS}`);
 
@@ -29,15 +36,12 @@ function run() {
                 const c = node.center, s = node.session;
                 console.log(`${c.name} | ${c.block_name}-${c.pincode} | AGE: ${s.min_age_limit} DATE:${s.date}`);
                 if (!isAlertSent(c.center_id + s.session_id + s.min_age_limit + s.date)) {
-                    fetch('https://api.telegram.org/bot<bot token>/sendMessage?chat_id=@<channelname>&text=' + encodeURIComponent(`${c.name}, ${c.address} \n${c.block_name} - ${c.pincode} \nAGE: ${s.min_age_limit} \nDATE:${s.date} \nAvailable: ${s.available_capacity}`));
+                    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${TELEGRAM_CHANNEL}&text=` + encodeURIComponent(`${c.name}, ${c.address} \n${c.block_name} - ${c.pincode} \nAGE: ${s.min_age_limit} \nDATE:${s.date} \nAvailable: ${s.available_capacity}`));
                     alertSent.push(c.center_id + s.session_id + s.min_age_limit + s.date);
                 }
             }
             process.stdout.write('\u0007');
             process.stdout.write('\u0007');
-            process.stdout.write('\u0007');
-            process.stdout.write('\u0007');
-
         }
     }).catch(e => {
         console.log(e);
@@ -63,7 +67,6 @@ function isAvailable(resp, ageLimit) {
             }
         }
     }
-
     return results;
 }
 
