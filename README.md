@@ -18,5 +18,7 @@ Program to search vaccine availability based on district id. You can add pin fil
 
 ## cowin-watch-telegram.js
 All features of cowin-watch.js, additionaly it can send the alert on Telegram. You need to put your Telegram bot token & channel name.
+
 How to create Telegram Bot?: https://core.telegram.org/bots
+
 How to create Telegram public Channel?: https://telegram.org/tour/channels
