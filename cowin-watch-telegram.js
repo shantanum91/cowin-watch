@@ -3,7 +3,7 @@ const fs = require('fs')
 
 /* Configure your district, pins, exclude pins & age limit */
 const AGE_LIMIT = 45;
-const DIST_ID = 379;
+const DIST_ID = 367;
 const PIN_FILTER = null;//[411014];
 const EXCLUDE_PINS = [];
 const now = new Date();
@@ -50,7 +50,6 @@ function run() {
 
 //TODO: Send recurring alerts
 function isAlertSent(id) {
-    console.log('checking: ' + id);
     return alertSent.includes(id);
 }
 
